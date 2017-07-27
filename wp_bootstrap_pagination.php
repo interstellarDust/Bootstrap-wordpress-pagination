@@ -1,6 +1,6 @@
 <?php
 /**
- * WordPress Bootstrap Pagination
+ * WordPress Bootstrap Pagination modified for aquanotes wordpress theme
  */
 
 function wp_bootstrap_pagination( $args = array() ) {
@@ -8,6 +8,10 @@ function wp_bootstrap_pagination( $args = array() ) {
     $defaults = array(
         'range'           => 4,
         'custom_query'    => FALSE,
+        'show_first'    => TRUE,
+        'show_last'    => TRUE,
+        'first_string' => __( 'First', 'text-domain' ),
+        'last_string'     => __( 'Last', 'text-domain' ),
         'previous_string' => __( 'Previous', 'text-domain' ),
         'next_string'     => __( 'Next', 'text-domain' ),
         'before_output'   => '<div class="post-nav"><ul class="pager">',
@@ -52,9 +56,11 @@ function wp_bootstrap_pagination( $args = array() ) {
     $previous = intval($page) - 1;
     $previous = esc_attr( get_pagenum_link($previous) );
     
-    $firstpage = esc_attr( get_pagenum_link(1) );
-    if ( $firstpage && (1 != $page) )
-        $echo .= '<li class="previous"><a href="' . $firstpage . '">' . __( 'First', 'text-domain' ) . '</a></li>';
+    if($args['show_first']){
+        $firstpage = esc_attr( get_pagenum_link(1) );
+        if ( $firstpage && (1 != $page) )
+            $echo .= '<li class="previous"><a href="' . $firstpage . '">' . $args['first_string'] . '</a></li>';
+    }
 
     if ( $previous && (1 != $page) )
         $echo .= '<li><a href="' . $previous . '" title="' . __( 'previous', 'text-domain') . '">' . $args['previous_string'] . '</a></li>';
@@ -74,9 +80,11 @@ function wp_bootstrap_pagination( $args = array() ) {
     if ($next && ($count != $page) )
         $echo .= '<li><a href="' . $next . '" title="' . __( 'next', 'text-domain') . '">' . $args['next_string'] . '</a></li>';
     
-    $lastpage = esc_attr( get_pagenum_link($count) );
-    if ( $lastpage ) {
-        $echo .= '<li class="next"><a href="' . $lastpage . '">' . __( 'Last', 'text-domain' ) . '</a></li>';
+    if($args['show_last']){
+        $lastpage = esc_attr( get_pagenum_link($count) );
+        if ( $lastpage ) {
+            $echo .= '<li class="next"><a href="' . $lastpage . '">' . $args['last_string'] . '</a></li>';
+        }
     }
 
     if ( isset($echo) )

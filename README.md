@@ -3,8 +3,11 @@ Bootstrap-wordpress-pagination
 
 **A custom WordPress numbered pagination function to fully implement the [Bootstrap 3.x](http://getbootstrap.com/) pagination/pager style in a custom theme.**
 
-* Autor URI: [OOPThemes](http://oopthemes.com/)
+* Original Autor URI: [OOPThemes](http://oopthemes.com/)
 * Forum: [OOPThemes Discussio](http://oopthemes.com/forums/forum/themes-forum/)
+
+Forked for Aquanotes wordpress theme with some more options
+* Original Autor URI: [RedefineLab Ltd](http://redefinelab.com/)
 
 Featured
 --------
@@ -45,14 +48,21 @@ Update your **index.php** or **template-blog.php** or any other file where you w
 ```
 if pagination is not showing, go to WordPress Dashboard > Reading > Blog pages show at most > set value smaller then number of posts your blog has.
 
-Filtering Next & Previous
+Filtering Next, Previous, First & Last with show/hide first and last links
 -------------------------
 To filter next and previous values use the following snippet into **functions.php**
 ```
 function customize_wp_bootstrap_pagination($args) {
-    
-    $args['previous_string'] = 'previous';
-    $args['next_string'] = 'next';
+    $args['range'] = 4;
+    $args['custom_query'] = FALSE;
+    $args['show_first'] = FALSE;
+    $args['show_last'] = FALSE;
+    $args['first_string'] = 'First';
+    $args['last_string'] = 'Last';
+    $args['previous_string'] = '<span aria-hidden="true"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>';
+    $args['next_string'] = '<span aria-hidden="true"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>';
+    $args['before_output'] = '<nav aria-label="Page navigation"><ul class="pagination">';
+    $args['after_output'] = '</ul></nav>';
     
     return $args;
 }
